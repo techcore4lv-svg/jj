@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>리디렉션 중...</title>
+  <style>
+    /* ===== Reset ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #header, .header, footer, .footer,
+    .aside, .sidebar, .article-header,
+    .article-footer, .btn-group, .revenue,
+    h1, h2, .tistory-id, .category {
+      display: none !important;
+    }
+
+    body, html {
+      background: #000 !important;
+    }
+
+    /* ===== Fullscreen Overlay ===== */
+    .fullscreen-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      padding: 20px;
+    }
+
+    /* ===== Logo Image ===== */
+    .redirect-logo {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    /* ===== Text ===== */
+    .redirect-text {
+      color: #fff;
+      margin-top: 24px;
+      font-size: 16px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .redirect-text a {
+      color: #0af;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .redirect-text a:hover {
+      border-bottom-color: #0af;
+    }
+
+    .countdown-text {
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .countdown-number {
+      display: inline-block;
+      min-width: 28px;
+      color: #0af;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fullscreen-overlay">
+    <!-- 로고 이미지 -->
+    <img
+      class="redirect-logo"
+      src="https://i.ibb.co/tTv0Nq4P/image.jpg"
+      alt="채널 로고"
+    >
+
+    <!-- 안내 문구 -->
+    <p class="redirect-text">
+      잠시 후 이동합니다. 자동 이동이 안 되면
+      <a href="https://litt.ly/j_study">여기</a>를 눌러주세요.
+    </p>
+
+    <!-- 카운트다운 -->
+    <p class="countdown-text">
+      <span class="countdown-number" id="countdown">3</span>초 후 자동 이동합니다.
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const TARGET_URL = 'https://litt.ly/j_study';
+      const START_COUNT = 3;
+      const INTERVAL_MS = 1000;
+
+      const countdownEl = document.getElementById('countdown');
+      let remaining = START_COUNT;
+
+      const tick = function () {
+        remaining -= 1;
+
+        if (countdownEl) {
+          countdownEl.textContent = remaining;
+        }
+
+        if (remaining <= 0) {
+          window.location.replace(TARGET_URL);
+          return;
+        }
+
+        setTimeout(tick, INTERVAL_MS);
+      };
+
+      // 첫 tick은 1초 뒤에 실행
+      setTimeout(tick, INTERVAL_MS);
+    })();
+  </script>
+
+</body>
+</html>
